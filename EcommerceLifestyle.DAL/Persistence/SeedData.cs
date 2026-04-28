@@ -1,4 +1,5 @@
 using EcommerceLifestyle.DAL.Entities;
+using EcommerceLifestyle.DAL.Entities.Enums;
 
 namespace EcommerceLifestyle.DAL.Persistence;
 
@@ -61,6 +62,25 @@ public static class SeedData
 
     // Static seed timestamp -- EF requires deterministic data for HasData (no DateTime.UtcNow).
     private static readonly DateTime SeedTimestamp = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+    // Five seed accounts for local development. Passwords are intentionally
+    // simple ({firstname}123). BCrypt hashes are pre-computed because HasData
+    // demands deterministic values -- a runtime call to BCrypt.HashPassword
+    // would generate a fresh salt every build and EF would emit a new
+    // migration each time. All hashes share the salt $2a$11$Mt5PNdur41SlBIGBosZy0u.
+    //   afzal@example.com    -> "afzal123"     (User)
+    //   abhishek@example.com -> "abhishek123"  (User)
+    //   sudhir@example.com   -> "sudhir123"    (User)
+    //   demo@example.com     -> "demo123"      (User)
+    //   vendor@example.com   -> "vendor123"    (Vendor)
+    public static readonly User[] Users = new[]
+    {
+        new User { Id = 1, FirstName = "Afzal",    LastName = "Haroon",  Email = "afzal@example.com",    PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0u1DeJ6z3avZ9ReGci5rG1.6mVUkg538C", Role = UserRole.User,   CreatedAt = SeedTimestamp },
+        new User { Id = 2, FirstName = "Abhishek", LastName = "Srivastava",   Email = "abhishek@example.com", PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0ukcVxRInybBi/HKtPOqJpA8z1xgnCtAy", Role = UserRole.User,   CreatedAt = SeedTimestamp },
+        new User { Id = 3, FirstName = "Sudhir",   LastName = "Panda",   Email = "sudhir@example.com",   PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0uKD2/EzPqUCAE8t6l/ho8T027wok0wD.", Role = UserRole.User,   CreatedAt = SeedTimestamp },
+        new User { Id = 4, FirstName = "Demo",     LastName = "User",    Email = "demo@example.com",     PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0uyGr/eADcK7Y4Y4iTfDxyXgVvvPRVJw6", Role = UserRole.User,   CreatedAt = SeedTimestamp },
+        new User { Id = 5, FirstName = "Vendor",   LastName = "Account", Email = "vendor@example.com",   PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0u.D3Al5BEyQsTng4LvhAOtvMs3DPTu62", Role = UserRole.Vendor, CreatedAt = SeedTimestamp },
+    };
 
     // One Inventory row per seeded product so vendor inventory endpoints
     // have data to query immediately. Auto-incremented ints starting at 1.

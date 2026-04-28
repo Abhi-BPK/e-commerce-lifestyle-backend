@@ -4,8 +4,10 @@ using System.Text.Json.Serialization;
 using EcommerceLifestyle.Api.Middleware;
 using EcommerceLifestyle.BLL;
 using EcommerceLifestyle.DAL;
+using EcommerceLifestyle.DAL.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -103,6 +105,14 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+// Code First: apply pending migrations on boot. Creates the DB if absent
+// (Pomelo issues CREATE DATABASE) and is a no-op when the schema is current.
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {

@@ -110,6 +110,7 @@ public class AppDbContext : DbContext
 
         // ---------- Seed ----------
         // Initial product catalogue (translated from frontend mock).
+        b.Entity<User>().HasData(SeedData.Users);
         b.Entity<Product>().HasData(SeedData.Products);
         b.Entity<Inventory>().HasData(SeedData.InventoryRows);
     }
