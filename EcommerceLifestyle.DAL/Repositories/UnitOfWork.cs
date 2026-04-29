@@ -16,6 +16,7 @@ public class UnitOfWork : IUnitOfWork
     private IInventoryRepository? _inventory;
     private IOrderRepository? _orders;
     private ILogRepository? _logs;
+    private IProductVariantRepository? _productVariants;
 
     public UnitOfWork(AppDbContext db) => _db = db;
 
@@ -25,6 +26,7 @@ public class UnitOfWork : IUnitOfWork
     public IInventoryRepository Inventory => _inventory ??= new InventoryRepository(_db);
     public IOrderRepository Orders => _orders ??= new OrderRepository(_db);
     public ILogRepository Logs => _logs ??= new LogRepository(_db);
+    public IProductVariantRepository ProductVariants => _productVariants ??= new ProductVariantRepository(_db);
 
     public Task<int> SaveChangesAsync(CancellationToken ct = default) => _db.SaveChangesAsync(ct);
 

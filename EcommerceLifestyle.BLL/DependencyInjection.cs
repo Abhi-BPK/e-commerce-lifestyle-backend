@@ -19,6 +19,13 @@ public static class BllServiceCollectionExtensions
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ILogService, LogService>();
+
+        // Vendor dashboard services (additive).
+        services.AddScoped<IVendorProductService, VendorProductService>();
+        services.AddScoped<IVendorInventoryService, VendorInventoryService>();
+        services.AddScoped<IVendorOrderService, VendorOrderService>();
+        services.AddScoped<IVendorAnalyticsService, VendorAnalyticsService>();
+
         return services;
     }
 }

@@ -17,7 +17,7 @@ public static class DalServiceCollectionExtensions
         // We pin a fixed version because AutoDetect would force a live DB
         // connection at design-time (migrations) -- which breaks `dotnet ef`
         // if the server is offline.
-        var serverVersion = new MariaDbServerVersion(new Version(10, 11, 0));
+        var serverVersion = new MySqlServerVersion(new Version(8, 0, 0));
 
         services.AddDbContext<AppDbContext>(options =>
             options.UseMySql(connectionString, serverVersion));
@@ -28,6 +28,10 @@ public static class DalServiceCollectionExtensions
         services.AddScoped<IInventoryRepository, InventoryRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<ILogRepository, LogRepository>();
+
+        // Vendor dashboard repositories (additive).
+        services.AddScoped<IProductVariantRepository, ProductVariantRepository>();
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;

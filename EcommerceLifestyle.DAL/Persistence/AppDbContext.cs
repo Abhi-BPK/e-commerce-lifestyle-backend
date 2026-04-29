@@ -18,6 +18,9 @@ public class AppDbContext : DbContext
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<Log> Logs => Set<Log>();
 
+    // Vendor dashboard: per-(Product, Size, Color) stock rows.
+    public DbSet<ProductVariant> ProductVariants => Set<ProductVariant>();
+
     protected override void OnModelCreating(ModelBuilder b)
     {
         base.OnModelCreating(b);
@@ -106,6 +109,24 @@ public class AppDbContext : DbContext
         b.Entity<Log>(e =>
         {
             e.HasIndex(l => l.Timestamp);
+        });
+
+        // ---------- ProductVariants (vendor dashboard) ----------
+        b.Entity<ProductVariant>(e =>
+        {
+            // Unique combo: a vendor cannot have two rows for the same
+            // (Product, Size, Color) -- they should update stock instead.
+            e.HasIndex(v => new { v.ProductId, v.Size, v.Color }).IsUnique();
+
+            e.HasOne<Product>()
+             .WithMany()
+             .HasForeignKey(v => v.ProductId)
+             .OnDelete(DeleteBehavior.Cascade);
+
+            e.HasOne<User>()
+             .WithMany()
+             .HasForeignKey(v => v.VendorId)
+             .OnDelete(DeleteBehavior.SetNull);
         });
 
         // ---------- Seed ----------

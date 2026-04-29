@@ -27,4 +27,13 @@ public class OrderItem
 
     [Required, MaxLength(500)]
     public string Image { get; set; } = string.Empty;
+
+    // ─── Vendor-dashboard additive fields ─────────────────────────────
+    // Variant info, snapshotted at order time. Nullable so existing
+    // OrderItem rows (placed before variants existed) stay valid.
+    [MaxLength(8)]
+    public string? Size { get; set; }
+
+    [MaxLength(40)]
+    public string? Color { get; set; }
 }

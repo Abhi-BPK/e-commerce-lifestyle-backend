@@ -48,4 +48,25 @@ public class Product
     // Optional FK to the Vendor that owns the product.
     // Seeded products have null because they were imported from the frontend mock.
     public int? VendorId { get; set; }
+
+    // ─── Vendor-dashboard additive fields (ALL nullable so existing seeded
+    //     rows and existing public read paths continue to work unchanged) ───
+
+    // Frontend taxonomy: "Men" | "Women" | "Unisex".
+    // Independent of the existing Subcategory slug used by the public catalog.
+    [MaxLength(20)]
+    public string? Category { get; set; }
+
+    // Frontend taxonomy: "Men" | "Women" | "Unisex".
+    [MaxLength(20)]
+    public string? Gender { get; set; }
+
+    // Vendor-only soft-disable toggle: "active" | "inactive".
+    // Null is treated as "active" for backwards compatibility.
+    [MaxLength(16)]
+    public string? Status { get; set; }
+
+    // Lifetime units sold for this product (used by analytics top-products chart).
+    // Defaults to 0; would be incremented when an OrderItem is placed for this product.
+    public int UnitsSold { get; set; } = 0;
 }

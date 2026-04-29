@@ -15,6 +15,9 @@ public interface IUnitOfWork : IAsyncDisposable
     IOrderRepository Orders { get; }
     ILogRepository Logs { get; }
 
+    // Vendor dashboard repositories.
+    IProductVariantRepository ProductVariants { get; }
+
     Task<int> SaveChangesAsync(CancellationToken ct = default);
     Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken ct = default);
 }
