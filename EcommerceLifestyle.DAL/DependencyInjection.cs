@@ -12,12 +12,12 @@ public static class DalServiceCollectionExtensions
 {
     public static IServiceCollection AddDal(this IServiceCollection services, string connectionString)
     {
-        // Pinned to MariaDB 10.11 (the local server we're running against).
+        // Pinned to MySQL 8.0 (the local server we run against, see README).
         // Pomelo speaks both MySQL and MariaDB; we just have to tell it which.
         // We pin a fixed version because AutoDetect would force a live DB
         // connection at design-time (migrations) -- which breaks `dotnet ef`
         // if the server is offline.
-        var serverVersion = new MariaDbServerVersion(new Version(10, 11, 0));
+        var serverVersion = new MySqlServerVersion(new Version(8, 0, 0));
 
         services.AddDbContext<AppDbContext>(options =>
             options.UseMySql(connectionString, serverVersion));
