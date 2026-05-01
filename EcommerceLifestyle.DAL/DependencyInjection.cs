@@ -20,7 +20,11 @@ public static class DalServiceCollectionExtensions
         var serverVersion = new MySqlServerVersion(new Version(8, 0, 0));
 
         services.AddDbContext<AppDbContext>(options =>
-            options.UseMySql(connectionString, serverVersion));
+            options.UseMySql(connectionString, serverVersion, mysql =>
+                mysql.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(10),
+                    errorNumbersToAdd: null)));
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
