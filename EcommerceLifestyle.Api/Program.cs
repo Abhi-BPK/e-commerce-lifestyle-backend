@@ -78,7 +78,19 @@ var allowedOrigins = builder.Configuration
     .Get<string[]>() ?? new[] { "http://localhost:5173", "http://localhost:5174", "http://localhost:4173" };
 
 builder.Services.AddCors(o => o.AddPolicy(CorsPolicy, p =>
-    p.WithOrigins(allowedOrigins)
+    p.SetIsOriginAllowed(origin =>
+     {
+         if (allowedOrigins.Contains(origin, StringComparer.OrdinalIgnoreCase))
+             return true;
+
+         if (Uri.TryCreate(origin, UriKind.Absolute, out var u)
+             && u.Scheme == Uri.UriSchemeHttps
+             && (u.Host.Equals("vercel.app", StringComparison.OrdinalIgnoreCase)
+                 || u.Host.EndsWith(".vercel.app", StringComparison.OrdinalIgnoreCase)))
+             return true;
+
+         return false;
+     })
      .AllowAnyHeader()
      .AllowAnyMethod()
      .AllowCredentials()));
