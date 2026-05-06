@@ -26,6 +26,13 @@ public static class BllServiceCollectionExtensions
         services.AddScoped<IVendorOrderService, VendorOrderService>();
         services.AddScoped<IVendorAnalyticsService, VendorAnalyticsService>();
 
+        // ── External login (Google / GitHub OIDC) ─────────────────────
+        // AddHttpClient registers a typed HttpClient per provider so each
+        // gets its own connection pool and lifetime management.
+        services.AddHttpClient<GoogleOidcClient>();
+        services.AddHttpClient<GitHubOAuthClient>();
+        services.AddScoped<IExternalLoginService, ExternalLoginService>();
+
         return services;
     }
 }

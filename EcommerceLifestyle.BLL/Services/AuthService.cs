@@ -24,7 +24,9 @@ public class AuthService : IAuthService
     public async Task<LoginResponse> LoginAsync(LoginRequest req, CancellationToken ct = default)
     {
         var user = await _uow.Users.GetByEmailAsync(req.Email.Trim().ToLowerInvariant(), ct);
-        if (user is null || !_hasher.Verify(req.Password, user.PasswordHash))
+        // External-login accounts (Google/GitHub) have a NULL PasswordHash --
+        // they must sign in via /api/auth/oidc/{provider}, never with a password.
+        if (user is null || string.IsNullOrEmpty(user.PasswordHash) || !_hasher.Verify(req.Password, user.PasswordHash))
         {
             // Same message either way -- don't leak which half is wrong.
             throw new ApiException(401, "Invalid email or password.", code: "INVALID_CREDENTIALS");

@@ -75,11 +75,11 @@ public static class SeedData
     //   vendor@example.com   -> "vendor123"    (Vendor)
     public static readonly User[] Users = new[]
     {
-        new User { Id = 1, FirstName = "Afzal",    LastName = "Haroon",  Email = "afzal@example.com",    PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0u1DeJ6z3avZ9ReGci5rG1.6mVUkg538C", Role = UserRole.User,   CreatedAt = SeedTimestamp },
-        new User { Id = 2, FirstName = "Abhishek", LastName = "Srivastava",   Email = "abhishek@example.com", PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0ukcVxRInybBi/HKtPOqJpA8z1xgnCtAy", Role = UserRole.User,   CreatedAt = SeedTimestamp },
-        new User { Id = 3, FirstName = "Sudhir",   LastName = "Panda",   Email = "sudhir@example.com",   PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0uKD2/EzPqUCAE8t6l/ho8T027wok0wD.", Role = UserRole.User,   CreatedAt = SeedTimestamp },
-        new User { Id = 4, FirstName = "Demo",     LastName = "User",    Email = "demo@example.com",     PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0uyGr/eADcK7Y4Y4iTfDxyXgVvvPRVJw6", Role = UserRole.User,   CreatedAt = SeedTimestamp },
-        new User { Id = 5, FirstName = "Vendor",   LastName = "Account", Email = "vendor@example.com",   PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0u.D3Al5BEyQsTng4LvhAOtvMs3DPTu62", Role = UserRole.Vendor, CreatedAt = SeedTimestamp },
+        new User { Id = 1, FirstName = "Afzal",    LastName = "Haroon",  Email = "afzal@example.com",    PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0u1DeJ6z3avZ9ReGci5rG1.6mVUkg538C", Role = UserRole.User,   CreatedAt = SeedTimestamp, Provider = "Local" },
+        new User { Id = 2, FirstName = "Abhishek", LastName = "Srivastava",   Email = "abhishek@example.com", PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0ukcVxRInybBi/HKtPOqJpA8z1xgnCtAy", Role = UserRole.User,   CreatedAt = SeedTimestamp, Provider = "Local" },
+        new User { Id = 3, FirstName = "Sudhir",   LastName = "Panda",   Email = "sudhir@example.com",   PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0uKD2/EzPqUCAE8t6l/ho8T027wok0wD.", Role = UserRole.User,   CreatedAt = SeedTimestamp, Provider = "Local" },
+        new User { Id = 4, FirstName = "Demo",     LastName = "User",    Email = "demo@example.com",     PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0uyGr/eADcK7Y4Y4iTfDxyXgVvvPRVJw6", Role = UserRole.User,   CreatedAt = SeedTimestamp, Provider = "Local" },
+        new User { Id = 5, FirstName = "Vendor",   LastName = "Account", Email = "vendor@example.com",   PasswordHash = "$2a$11$Mt5PNdur41SlBIGBosZy0u.D3Al5BEyQsTng4LvhAOtvMs3DPTu62", Role = UserRole.Vendor, CreatedAt = SeedTimestamp, Provider = "Local" },
     };
 
     // One Inventory row per seeded product so vendor inventory endpoints

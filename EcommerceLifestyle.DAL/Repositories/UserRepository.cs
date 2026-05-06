@@ -15,4 +15,7 @@ public class UserRepository : Repository<User, int>, IUserRepository
 
     public Task<bool> EmailExistsAsync(string email, CancellationToken ct = default)
         => _set.AnyAsync(u => u.Email == email, ct);
+
+    public Task<User?> GetByExternalLoginAsync(string provider, string providerUserId, CancellationToken ct = default)
+        => _set.FirstOrDefaultAsync(u => u.Provider == provider && u.ProviderUserId == providerUserId, ct);
 }

@@ -35,6 +35,18 @@ public class AppDbContext : DbContext
             e.Property(u => u.Role)
              .HasConversion<string>()
              .HasMaxLength(16);
+
+            // External login (OIDC / OAuth):
+            //   - Provider is non-null with a "Local" default so existing rows are valid.
+            //   - (Provider, ProviderUserId) must be unique to prevent duplicate
+            //     external accounts. Local users keep ProviderUserId = NULL,
+            //     and MySQL allows multiple NULLs in a unique index.
+            e.Property(u => u.Provider)
+             .HasMaxLength(20)
+             .HasDefaultValue("Local");
+
+            e.HasIndex(u => new { u.Provider, u.ProviderUserId })
+             .IsUnique();
         });
 
         // ---------- Products ----------
