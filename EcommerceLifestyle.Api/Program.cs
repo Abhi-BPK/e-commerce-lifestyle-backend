@@ -126,7 +126,10 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
-if (app.Environment.IsDevelopment())
+// Swagger is enabled in non-production environments. "Local" is the default
+// for `dotnet run` (set in launchSettings.json); "Development" is the deployed
+// dev environment on Railway. Production deliberately omits Swagger.
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Local"))
 {
     app.UseSwagger();
     app.UseSwaggerUI();
